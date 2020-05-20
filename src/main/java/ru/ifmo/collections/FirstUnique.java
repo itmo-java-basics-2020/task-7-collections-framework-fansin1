@@ -1,6 +1,6 @@
 package ru.ifmo.collections;
 
-import java.util.TreeSet;
+import java.util.LinkedHashMap;
 
 /**
  * Design a class which contains integers and returns first unique integer (in order of addition).
@@ -8,7 +8,7 @@ import java.util.TreeSet;
  */
 public class FirstUnique {
 
-    private final TreeSet<Integer> uniques = new TreeSet<>();
+    private final LinkedHashMap<Integer, Boolean> elements = new LinkedHashMap<>();
 
     public FirstUnique(int[] numbers) {
         for (int number : numbers) {
@@ -17,17 +17,17 @@ public class FirstUnique {
     }
 
     public int showFirstUnique() {
-        if (uniques.isEmpty()) {
-            return -1;
+        for (var element : elements.entrySet()) {
+            if (element.getValue()) {
+                return element.getKey();
+            }
         }
-        return uniques.first();
+
+        return -1;
     }
 
     public void add(int value) {
-        if (uniques.contains(value)) {
-            uniques.remove(value);
-        } else {
-            uniques.add(value);
-        }
+        var unique = !elements.containsKey(value);
+        elements.put(value, unique);
     }
 }
