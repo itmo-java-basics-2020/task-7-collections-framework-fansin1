@@ -1,7 +1,6 @@
 package ru.ifmo.collections;
 
-import java.util.AbstractSet;
-import java.util.Comparator;
+import java.util.*;
 
 /**
  * Represents sorted set of unique values.
@@ -16,21 +15,73 @@ import java.util.Comparator;
  *
  * @param <T> set contents type
  */
-public abstract class SortedSet<T> extends AbstractSet<T> {
-    // private final Map<???, ???> contents; TODO decide Map implementation and key/value types. "???" is used just as an example
+public class SortedSet<T> extends AbstractSet<T> {
+
+    private static final Object stub = new Object();
+    private final TreeMap<T, Object> map;
+
     public static <T> SortedSet<T> create() {
-        throw new UnsupportedOperationException(); // TODO implement
+        return new SortedSet<>();
     }
 
     public static <T> SortedSet<T> from(Comparator<T> comparator) {
-        throw new UnsupportedOperationException(); // TODO implement
+        return new SortedSet<>(comparator);
     }
 
-    public T[] getSorted() {
-        throw new UnsupportedOperationException(); // TODO implement
+    public SortedSet(Comparator<T> comparator) {
+        map = new TreeMap<>(comparator);
     }
 
-    public T[] getReversed() {
-        throw new UnsupportedOperationException(); // TODO implement
+    public SortedSet() {
+        map = new TreeMap<>();
+    }
+
+    public List<T> getSorted() {
+        return new ArrayList<>(map.keySet());
+    }
+
+    public List<T> getReversed() {
+        return new ArrayList<>(map.descendingKeySet());
+    }
+
+    @Override
+    public boolean add(T key) {
+        return map.put(key, stub) == null;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> collection) {
+        boolean added = false;
+        for (T key : collection){
+            added |= add(key);
+        }
+        return added;
+    }
+
+    @Override
+    public boolean remove(Object key) {
+        if (key == null){
+            throw new IllegalArgumentException("Argument is null");
+        }
+        return map.remove(key) == null;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> collection) {
+        boolean removed = false;
+        for (var value : collection) {
+            removed |= map.remove(value) != null;
+        }
+        return removed;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return map.keySet().iterator();
+    }
+
+    @Override
+    public int size() {
+        return map.size();
     }
 }
