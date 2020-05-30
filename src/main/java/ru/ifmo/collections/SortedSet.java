@@ -18,7 +18,7 @@ import java.util.*;
 public class SortedSet<T> extends AbstractSet<T> {
 
     private static final Object stub = new Object();
-    private final TreeMap<T, Object> map;
+    private final NavigableMap<T, Object> map;
 
     public static <T> SortedSet<T> create() {
         return new SortedSet<>();

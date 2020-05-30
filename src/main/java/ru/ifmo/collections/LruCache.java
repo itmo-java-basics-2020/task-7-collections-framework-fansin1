@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class LruCache<K, V> {
 
-    private final LinkedHashMap<K, V> map;
+    private final Map<K, V> map;
 
     public LruCache(int capacity) {
         map = new LinkedHashMap<>(capacity, 1f, true) {
