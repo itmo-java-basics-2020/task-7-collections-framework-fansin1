@@ -12,22 +12,21 @@ import java.util.Queue;
  */
 public class KthLargest {
 
-    private final Queue<Integer> sortedNumbers;
+    private final Queue<Integer> queue = new PriorityQueue<>();
     private final int k;
 
     public KthLargest(int k, int[] numbers) {
         this.k = k;
-        sortedNumbers = new PriorityQueue<>();
         for (int number : numbers) {
-            sortedNumbers.add(number);
+            queue.add(number);
         }
     }
 
     public int add(int val) {
-        sortedNumbers.add(val);
-        while (sortedNumbers.size() > k) {
-            sortedNumbers.poll();
+        queue.add(val);
+        while (queue.size() > k) {
+            queue.poll();
         }
-        return sortedNumbers.peek();
+        return queue.peek();
     }
 }

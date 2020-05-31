@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class FirstUnique {
 
-    private final Map<Integer, Boolean> elements = new LinkedHashMap<>();
+    private final Map<Integer, Boolean> map = new LinkedHashMap<>();
 
     public FirstUnique(int[] numbers) {
         for (int number : numbers) {
@@ -18,7 +18,7 @@ public class FirstUnique {
     }
 
     public int showFirstUnique() {
-        for (var element : elements.entrySet()) {
+        for (var element : map.entrySet()) {
             if (element.getValue()) {
                 return element.getKey();
             }
@@ -28,7 +28,7 @@ public class FirstUnique {
     }
 
     public void add(int value) {
-        var unique = !elements.containsKey(value);
-        elements.put(value, unique);
+        var unique = !map.containsKey(value);
+        map.put(value, unique);
     }
 }
